@@ -42,7 +42,7 @@ while true do
     end
 
     if err.yaw > 0.1 or err.yaw < -0.1 then
-        if err.yaw < 0 then
+        if err.yaw > 0 then
             helm.move('right', false)
             helm.move('left', true)
         else
