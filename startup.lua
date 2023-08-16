@@ -1,5 +1,3 @@
--- updating the start script
-
 -- updating starting script if needed
 res = http.get("https://raw.githubusercontent.com/ogelbw/Valkerian_skies_auto_ship/main/startup.lua")
 
@@ -30,17 +28,16 @@ function update_script(script_name)
         if fs.exists(script_name..".lua") then
             script_on_disk = fs.open(script_name..".lua", "r")
 
-            if script_on_disk.readAll() ~= git_script then
-                script_on_disk.close()
-                fs.delete(script_name..".lua")
-                f = fs.open(script_name..".lua", "w")
-                f.write(git_script)
-                f.close()
-                print("updated "..script_name.." script.")
-            end
+            if script_on_disk.readAll() == git_script then script_on_disk.close(); return 0 end
+            script_on_disk.close()
+            fs.delete(script_name..".lua")
         end
+
+        f = fs.open(script_name..".lua", "w")
+        f.write(git_script)
+        f.close()
+        print("updated "..script_name.." script.")
     end
-    
 end
 
 update_script("auto_pilot")
