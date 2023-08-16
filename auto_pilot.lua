@@ -41,9 +41,9 @@ while true do
         err.yaw = 2*math.pi + err.yaw
     end
 
-    if (err.yaw > math.pi/2 or err.yaw < math.pi/2) and math.abs(err.x) + math.abs(err.z) < 10 then
+    if (err.yaw > -math.pi/2 or err.yaw < math.pi/2) and (math.abs(err.x) + math.abs(err.z)) < 10 then
         helm.move("forward", true)
-    elseif err.x + err.z < 10 then
+    elseif (err.x + err.z) < 10 then
         helm.move("forward", false)
         helm.resetAllMovement()
     else
