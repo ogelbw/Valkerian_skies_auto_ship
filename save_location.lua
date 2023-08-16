@@ -12,3 +12,5 @@ f.write(coords.x..',')
 f.write(coords.y..',')
 f.write(coords.z..',')
 f.write(ship_data.getRotation().yaw)
+
+f.close()
