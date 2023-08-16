@@ -7,7 +7,7 @@ if fs.exists(args[1]..".coords") then
     fs.delete(args[1]..".coords")
 end
 
-local f = fs.open(args[1], "w")
+local f = fs.open(args[1]..".coords", "w")
 f.write(coords.x..',')
 f.write(coords.y..',')
 f.write(coords.z..',')
