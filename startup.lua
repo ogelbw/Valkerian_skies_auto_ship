@@ -1,4 +1,7 @@
+print("")
+
 -- updating starting script if needed
+print("Checking startscript for updates")
 res = http.get("https://raw.githubusercontent.com/ogelbw/Valkerian_skies_auto_ship/main/startup.lua")
 
 if res ~= nil then
@@ -40,5 +43,8 @@ function update_script(script_name)
     end
 end
 
+print()
+print("checking other scripts for updates...")
 update_script("auto_pilot")
 update_script("save_location")
+print()
