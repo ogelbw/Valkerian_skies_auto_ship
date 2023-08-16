@@ -45,6 +45,7 @@ while true do
         sign = 1
     else
         sign = -1
+    end
 
     if err.yaw > math.pi then
         err.yaw = (-2*math.pi) + err.yaw
