@@ -14,7 +14,7 @@ function split (inputstr, sep)
 end
 
 
-local f = fs.open(args[1]..".coords")
+local f = fs.open(args[1]..".coords", "r")
 target = fs.readAll()
 f.close()
 target = split(target, ",")
