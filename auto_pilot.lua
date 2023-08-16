@@ -25,6 +25,8 @@ target = {
     ['yaw'] = target[4]
 }
 
+print("going to "..target.x.." "..target.z)
+
 while true do
     local pos = ship_reader.getWorldspacePosition()
     local rot = ship_reader.getRotation()
@@ -42,9 +44,9 @@ while true do
     }
 
     if (pos.x > 0 and pos.z > 0) or ((pos.x < 0 and pos.z < 0)) then 
-        sign = 1
-    else
         sign = -1
+    else
+        sign = 1
     end
 
     if err.yaw > math.pi then
@@ -53,7 +55,7 @@ while true do
         err.yaw = 2*math.pi + err.yaw
     end
 
-    if (err.yaw > -math.pi/2 or err.yaw < math.pi/2) and (math.abs(err.x) + math.abs(err.z)) > 10 then
+    if (math.abs(err.yaw) < math.pi/2) and (math.abs(err.x) + math.abs(err.z)) > 10 then
         helm.move("forward", true)
     elseif (err.x + err.z) < 10 then
         helm.move("forward", false)
@@ -64,7 +66,7 @@ while true do
     end
 
     if (err.yaw * sign) > 0.1 or (err.yaw * sign) < -0.1 then
-        if err.yaw > 0 then
+        if (err.yaw * sign) > 0 then
             helm.move('right', false)
             helm.move('left', true)
         else
