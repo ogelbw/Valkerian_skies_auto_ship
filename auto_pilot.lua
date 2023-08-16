@@ -32,7 +32,7 @@ while true do
         ['x']   = target.x - pos.x,
         ['y']   = target.y - pos.y,
         ['z']   = target.z - pos.z,
-        ['yaw'] = math.atan2(target.z - pos.z, target.x - pos.x - rot.roll) -- mod has this mislabeled
+        ['yaw'] = math.atan2(target.z - pos.z, target.x - pos.x - rot.yaw) -- mod has this mislabeled
     }
 
     if err.yaw > math.pi then
