@@ -15,7 +15,7 @@ end
 
 
 local f = fs.open(args[1]..".coords", "r")
-target = fs.readAll()
+target = f.readAll()
 f.close()
 target = split(target, ",")
 target = {
@@ -29,18 +29,30 @@ rot_error = math.atan2(target.z, target.pos.x)
 
 while true do
     local pos = ship_reader.getWorldspacePosition()
-    local error = {
+    local rot = ship_reader.getRotation()
+    local err = {
         ['x']   = target.x - pos.x,
         ['y']   = target.y - pos.y,
         ['z']   = target.z - pos.z,
-        ['yaw'] = math.atan2(target.z - pos.z, target.x - pos.x)
+        ['yaw'] = math.atan2(target.z - pos.z, target.x - rot.roll) -- mod has this mislabeled
     }
 
-    if error.yaw < 0 then
-        helm.move('left', true)
-        helm.move('right', false)
+    if err.yaw > math.pi then
+        err.yaw = (-2*math.pi) + err.yaw
+    elseif err.yaw < -math.pi then
+        err.yaw = 2*math.pi + err.yaw
+    end
+
+    if err.yaw > 0.1 or err.yaw < -0.1 then
+        if err.yaw < 0 then
+            helm.move('right', false)
+            helm.move('left', true)
+        else
+            helm.move('left', false)
+            helm.move('right', true)
+        end
     else
         helm.move('left', false)
-        helm.move('right', true)
+        helm.move('right', false)
     end
 end
