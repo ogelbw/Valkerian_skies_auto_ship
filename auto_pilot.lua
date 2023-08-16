@@ -65,7 +65,7 @@ while true do
 
     end
 
-    if (err.yaw * sign) > 0.1 or (err.yaw * sign) < -0.1 then
+    if not ((math.abs(err.yaw) < 0.1) or (math.abs(err.yaw) > (math.pi - 0.1))) then
         if (err.yaw * sign) > 0 then
             helm.move('right', false)
             helm.move('left', true)
