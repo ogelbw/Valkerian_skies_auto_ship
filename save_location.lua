@@ -1,7 +1,6 @@
 args = {...}
 
-local ship_data = peripheral.wrap("below")
-
+ship_data = peripheral.wrap("below")
 coords = ship_data.getWorldspacePosition()
 
 if fs.exists(args[1]..".coords") then
