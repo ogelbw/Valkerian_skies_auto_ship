@@ -25,8 +25,6 @@ target = {
     ['yaw'] = target[4]
 }
 
-rot_error = math.atan2(target.z, target.pos.x)
-
 while true do
     local pos = ship_reader.getWorldspacePosition()
     local rot = ship_reader.getRotation()
@@ -34,7 +32,7 @@ while true do
         ['x']   = target.x - pos.x,
         ['y']   = target.y - pos.y,
         ['z']   = target.z - pos.z,
-        ['yaw'] = math.atan2(target.z - pos.z, target.x - rot.roll) -- mod has this mislabeled
+        ['yaw'] = math.atan2(target.z - pos.z, target.x - pos.x - rot.roll) -- mod has this mislabeled
     }
 
     if err.yaw > math.pi then
