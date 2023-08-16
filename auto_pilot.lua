@@ -53,4 +53,6 @@ while true do
         helm.move('left', false)
         helm.move('right', false)
     end
+
+    sleep(0.1)
 end
