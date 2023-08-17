@@ -32,18 +32,26 @@ while true do
     local rot = ship_reader.getRotation()
     
     if (pos.x > 0 and pos.z > 0) or ((pos.x < 0 and pos.z < 0)) then 
-        sign = -1
-    else
         sign = 1
+    else
+        sign = -1
     end
-
+    
+    
     local err = {
         ['x']   = pos.x - target.x ,
         ['y']   = pos.y - target.y ,
         ['z']   = pos.z - target.z ,
         ['yaw'] = math.atan2(target.x - pos.x, target.z - pos.z ) - (rot.roll*sign) -- mod has this mislabeled
     }
+    
 
+    local yawDiff = err.yaw
+    if yawDiff > math.pi then
+        yawDiff = yawDiff - 2*math.pi
+    elseif yawDiff < -math.pi then
+        yawDiff = yawDiff + 2*math.pi
+    end
 
     -- if (math.abs(err.yaw) < math.pi/2) and (math.abs(err.x) + math.abs(err.z)) > 10 then
     --     helm.move("forward", true)
@@ -56,7 +64,7 @@ while true do
     -- end
 
     -- if (math.abs(err.yaw) > 0.1) and (math.abs(err.yaw) < (math.pi - 0.1)) then
-    if (err.yaw* sign) > 0 then
+    if (yawDiff) > 0 then
         helm.move('right', false)
         helm.move('left', true)
     else
