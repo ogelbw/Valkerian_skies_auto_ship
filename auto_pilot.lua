@@ -30,12 +30,6 @@ print("going to "..target.x.." "..target.z)
 while true do
     local pos = ship_reader.getWorldspacePosition()
     local rot = ship_reader.getRotation()
-   
-    if (target.x - pos.x) == 0 then
-        yaw = math.pi/2
-    else
-        yaw = math.atan2(target.z - pos.z, target.x - pos.x) - rot.roll
-    end
     
     if (pos.x > 0 and pos.z > 0) or ((pos.x < 0 and pos.z < 0)) then 
         sign = -1
@@ -47,7 +41,7 @@ while true do
         ['x']   = pos.x - target.x ,
         ['y']   = pos.y - target.y ,
         ['z']   = pos.z - target.z ,
-        ['yaw'] = math.atan2(pos.z - target.z, pos.x - target.x ) - (rot.roll*sign) -- mod has this mislabeled
+        ['yaw'] = math.atan2(pos.z - target.z, pos.x - target.x ) - ((rot.roll+(math.pi/2))*sign) -- mod has this mislabeled
     }
 
 
