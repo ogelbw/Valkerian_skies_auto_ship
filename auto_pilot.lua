@@ -41,7 +41,7 @@ while true do
         ['x']   = pos.x - target.x ,
         ['y']   = pos.y - target.y ,
         ['z']   = pos.z - target.z ,
-        ['yaw'] = math.atan2(pos.x - target.x, pos.z - target.z ) - (rot.roll*sign) -- mod has this mislabeled
+        ['yaw'] = math.atan2(target.x - pos.x, target.z - pos.z ) - (rot.roll*sign) -- mod has this mislabeled
     }
 
 
