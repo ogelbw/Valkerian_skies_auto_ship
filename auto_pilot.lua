@@ -52,6 +52,8 @@ while true do
     else
         helm.move("forward", false)
         print("We have arrived")
+        helm.move('left', false)
+        helm.move('right', false)
         return
         
     end
