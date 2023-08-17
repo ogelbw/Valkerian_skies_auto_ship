@@ -52,7 +52,7 @@ while true do
     else
         helm.move("forward", false)
         print("We have arrived")
-        os.exit(0)
+        return
         
     end
 
