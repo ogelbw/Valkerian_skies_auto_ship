@@ -37,19 +37,19 @@ while true do
         yaw = math.atan2(target.z - pos.z, target.x - pos.x) - rot.roll
     end
     
-
-    local err = {
-        ['x']   = pos.x - target.x ,
-        ['y']   = pos.y - target.y ,
-        ['z']   = pos.z - target.z ,
-        ['yaw'] = math.atan2(pos.z - target.z, pos.x - target.x ) - rot.roll -- mod has this mislabeled
-    }
-
     if (pos.x > 0 and pos.z > 0) or ((pos.x < 0 and pos.z < 0)) then 
         sign = -1
     else
         sign = 1
     end
+
+    local err = {
+        ['x']   = pos.x - target.x ,
+        ['y']   = pos.y - target.y ,
+        ['z']   = pos.z - target.z ,
+        ['yaw'] = math.atan2(pos.z - target.z, pos.x - target.x ) - (rot.roll*sign) -- mod has this mislabeled
+    }
+
 
     -- if (math.abs(err.yaw) < math.pi/2) and (math.abs(err.x) + math.abs(err.z)) > 10 then
     --     helm.move("forward", true)
