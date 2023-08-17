@@ -51,28 +51,29 @@ while true do
         sign = 1
     end
 
-    if (math.abs(err.yaw) < math.pi/2) and (math.abs(err.x) + math.abs(err.z)) > 10 then
-        helm.move("forward", true)
-    elseif (err.x + err.z) < 10 then
-        helm.move("forward", false)
-        helm.resetAllMovement()
-    else
-        helm.move("forward", false)
+    -- if (math.abs(err.yaw) < math.pi/2) and (math.abs(err.x) + math.abs(err.z)) > 10 then
+    --     helm.move("forward", true)
+    -- elseif (err.x + err.z) < 10 then
+    --     helm.move("forward", false)
+    --     helm.resetAllMovement()
+    -- else
+    --     helm.move("forward", false)
 
-    end
+    -- end
 
-    if (math.abs(err.yaw) > 0.1) and (math.abs(err.yaw) < (math.pi - 0.1)) then
-        if (err.yaw* sign) > 0 then
-            helm.move('right', false)
-            helm.move('left', true)
-        else
-            helm.move('left', false)
-            helm.move('right', true)
-        end
+    -- if (math.abs(err.yaw) > 0.1) and (math.abs(err.yaw) < (math.pi - 0.1)) then
+    if (err.yaw* sign) > 0 then
+        helm.move('right', false)
+        helm.move('left', true)
     else
         helm.move('left', false)
-        helm.move('right', false)
+        helm.move('right', true)
     end
+    print(err.yaw)
+    -- else
+    --     helm.move('left', false)
+    --     helm.move('right', false)
+    -- end
     
 
     sleep(0.1)
