@@ -51,14 +51,6 @@ while true do
         sign = 1
     end
 
-    local yawDiff = err.yaw
-    if yawDiff > math.pi then
-        yawDiff = yawDiff - 2*math.pi
-    elseif yawDiff < -math.pi then
-        yawDiff = yawDiff + 2*math.pi
-    end
-
-
     if (math.abs(err.yaw) < math.pi/2) and (math.abs(err.x) + math.abs(err.z)) > 10 then
         helm.move("forward", true)
     elseif (err.x + err.z) < 10 then
@@ -69,8 +61,8 @@ while true do
 
     end
 
-    if (math.abs(yawDiff) > 0.1) and (math.abs(yawDiff) < (math.pi - 0.1)) then
-        if (yawDiff * sign) > 0 then
+    if (math.abs(err.yaw) > 0.1) and (math.abs(err.yaw) < (math.pi - 0.1)) then
+        if (err.yaw* sign) > 0 then
             helm.move('right', false)
             helm.move('left', true)
         else
