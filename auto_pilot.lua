@@ -30,11 +30,13 @@ print("going to "..target.x.." "..target.z)
 while true do
     local pos = ship_reader.getWorldspacePosition()
     local rot = ship_reader.getRotation()
-    if (pos.x - target.x) == 0 then
+   
+    if (target.x - pos.x) == 0 then
         yaw = math.pi/2
     else
-        yaw = math.atan((pos.z - target.z) / (pos.x - target.x) ) - rot.roll
+        yaw = math.atan2(target.z - pos.z, target.x - pos.x) - rot.roll
     end
+    
 
     local err = {
         ['x']   = pos.x - target.x ,
@@ -49,11 +51,13 @@ while true do
         sign = 1
     end
 
-    if err.yaw > math.pi then
-        err.yaw = (-2*math.pi) + err.yaw
-    elseif err.yaw < -math.pi then
-        err.yaw = 2*math.pi + err.yaw
+    local yawDiff = err.yaw
+    if yawDiff > math.pi then
+        yawDiff = yawDiff - 2*math.pi
+    elseif yawDiff < -math.pi then
+        yawDiff = yawDiff + 2*math.pi
     end
+
 
     if (math.abs(err.yaw) < math.pi/2) and (math.abs(err.x) + math.abs(err.z)) > 10 then
         helm.move("forward", true)
@@ -65,8 +69,8 @@ while true do
 
     end
 
-    if not ((math.abs(err.yaw) < 0.1) or (math.abs(err.yaw) > (math.pi - 0.1))) then
-        if (err.yaw * sign) > 0 then
+    if (math.abs(yawDiff) > 0.1) and (math.abs(yawDiff) < (math.pi - 0.1)) then
+        if (yawDiff * sign) > 0 then
             helm.move('right', false)
             helm.move('left', true)
         else
@@ -77,6 +81,7 @@ while true do
         helm.move('left', false)
         helm.move('right', false)
     end
+    
 
     sleep(0.1)
 end
