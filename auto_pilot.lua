@@ -63,19 +63,19 @@ while true do
 
     -- end
 
-    -- if (math.abs(err.yaw) > 0.1) and (math.abs(err.yaw) < (math.pi - 0.1)) then
-    if (yawDiff) > 0 then
-        helm.move('right', false)
-        helm.move('left', true)
-    else
+    if (math.abs(yawDiff) < 0.1) or (math.abs(yawDiff) > (math.pi - 0.1)) then
         helm.move('left', false)
-        helm.move('right', true)
+        helm.move('right', false)
+    else
+        if (yawDiff) < 0 then
+            helm.move('right', false)
+            helm.move('left', true)
+        else
+            helm.move('left', false)
+            helm.move('right', true)
+        end
     end
     print(err.yaw)
-    -- else
-    --     helm.move('left', false)
-    --     helm.move('right', false)
-    -- end
     
 
     sleep(0.1)
