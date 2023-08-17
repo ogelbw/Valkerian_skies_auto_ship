@@ -13,7 +13,6 @@ function split (inputstr, sep)
     return t
 end
 
-
 local f = fs.open(args[1]..".coords", "r")
 target = f.readAll()
 f.close()
@@ -31,18 +30,11 @@ while true do
     local pos = ship_reader.getWorldspacePosition()
     local rot = ship_reader.getRotation()
     
-    if (pos.x > 0 and pos.z > 0) or ((pos.x < 0 and pos.z < 0)) then 
-        sign = 1
-    else
-        sign = -1
-    end
-    
-    
     local err = {
         ['x']   = pos.x - target.x ,
         ['y']   = pos.y - target.y ,
         ['z']   = pos.z - target.z ,
-        ['yaw'] = math.atan2(target.x - pos.x, target.z - pos.z ) - (rot.roll*sign) -- mod has this mislabeled
+        ['yaw'] = math.atan2(target.x - pos.x, target.z - pos.z ) - (rot.roll) -- mod has this mislabeled
     }
     
 
@@ -55,8 +47,13 @@ while true do
 
     if (math.abs(yawDiff) > math.pi/2) and (math.abs(err.x) + math.abs(err.z)) > 10 then
         helm.move("forward", true)
-    else 
+    elseif (math.abs(err.x) + math.abs(err.z)) > 10 then
         helm.move("forward", false)
+    else
+        helm.move("forward", false)
+        print("We have arrived")
+        os.exit(0)
+        
     end
 
     if (math.abs(yawDiff) > (math.pi - 0.1)) then
@@ -71,8 +68,5 @@ while true do
             helm.move('right', true)
         end
     end
-    print(err.yaw)
-    
-
     sleep(0.1)
 end
